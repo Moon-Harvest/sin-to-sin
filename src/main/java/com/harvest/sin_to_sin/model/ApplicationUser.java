@@ -9,17 +9,25 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class ApplicationUser {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String username;
     private String email;
+    private String username;
     private String hashedPassword;
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> roles;
+
+    public ApplicationUser(String email, String username, String hashedPassword) {
+        this.email = email;
+        this.username = username;
+        this.hashedPassword = hashedPassword;
+    }
 }
