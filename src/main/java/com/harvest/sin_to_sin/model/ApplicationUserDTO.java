@@ -1,4 +1,4 @@
 package com.harvest.sin_to_sin.model;
 
-public record ApplicationUserDTO(String username, String email) {
+public record ApplicationUserDTO(String email, String username) {
 }

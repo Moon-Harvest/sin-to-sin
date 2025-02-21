@@ -10,5 +10,5 @@ import com.harvest.sin_to_sin.model.ApplicationUser;
 @Repository
 public interface ApplicationUserRepository extends JpaRepository<ApplicationUser, Long>{
     Optional<ApplicationUser> findByEmail(String email);
-    boolean existsByUsername(String username);
+    boolean existsByEmail(String email);
 }

@@ -1,7 +1,7 @@
 package com.harvest.sin_to_sin.model;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import lombok.Data;
 
@@ -11,13 +11,7 @@ public class Catalog {
     private List<Product> products;
 
     public List<Product> getProductsOnSale() {
-        List<Product> onSale = new ArrayList<>();
-        for (Product product : products) {
-            if (product.isOnSale()) {
-                onSale.add(product);
-            }
-        }
-        return onSale;
+        return products.stream().filter(Product::isOnSale).collect(Collectors.toList());
     }
 
 }

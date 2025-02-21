@@ -1,7 +1,7 @@
 package com.harvest.sin_to_sin.model;
 
 import java.util.Collection;
-import java.util.stream.Collectors;
+import java.util.Collections;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,9 +16,9 @@ public class ApplicationUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return user.getRoles().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
+        return Collections.singleton(new SimpleGrantedAuthority(user.getRole()));
     }
-
+    
     @Override
     public String getPassword() {
         return user.getHashedPassword();
