@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.harvest.sin_to_sin.model.ApplicationUser;
-import com.harvest.sin_to_sin.model.ApplicationUserDTO;
 import com.harvest.sin_to_sin.model.RegistrationForm;
 import com.harvest.sin_to_sin.service.ApplicationUserService;
 

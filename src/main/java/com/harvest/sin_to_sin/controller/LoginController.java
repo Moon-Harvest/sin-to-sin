@@ -13,16 +13,9 @@ public class LoginController {
         return "login";
     }
 
-    @GetMapping("/register")
-    public String showRegisterPage() {
-        return "register";
+    @GetMapping("/authenticated")
+    public String showAuthenticatedPage() {
+        return "authenticated";
     }
 
-    @GetMapping("/")
-    public String home(Model model) {
-        model.addAttribute("username", "John Doe"); // Dynamic name
-        model.addAttribute("isLoggedIn", true);     // Change to false to test
-        return "home";
-    }
 }
-

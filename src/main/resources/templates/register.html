@@ -1,32 +1,99 @@
+<!-- register.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
+    <meta charset="UTF-8">
     <title>Register</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+
+        .container {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 320px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.7rem;
+            margin-top: 1.5rem;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        button:hover {
+            background-color: #1976D2;
+        }
+
+        p {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        a {
+            color: #2196F3;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
+
 <body>
-    <h2>Register</h2>
-    <form th:action="@{/register}" th:object="${user}" method="post">
-        <div>
-            <label>Email:</label>
-            <input type="email" th:field="*{email}" required />
-        </div>
-        <div>
-            <label>Username:</label>
-            <input type="text" th:field="*{username}" required />
-        </div>
-        <div>
-            <label>Password:</label>
-            <input type="password" th:field="*{password}" required />
-        </div>
-        <button type="submit">Register</button>
-    </form>
-    
-    <div th:if="${successMessage}">
-        <p th:text="${successMessage}" style="color: green;"></p>
-    </div>
-    <div th:if="${errorMessage}">
-        <p th:text="${errorMessage}" style="color: red;"></p>
+    <div class="container">
+        <h2>Register</h2>
+        <form th:action="@{/register}" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+
+            <button type="submit">Register</button>
+        </form>
+        <p>Already have an account? <a th:href="@{/login}">Login here</a></p>
     </div>
 </body>
+
 </html>
+

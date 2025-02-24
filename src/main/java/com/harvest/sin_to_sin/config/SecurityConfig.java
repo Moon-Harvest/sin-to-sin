@@ -38,8 +38,8 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/dashboard", true)
-                        .failureUrl("/login?error=true")
+                        .defaultSuccessUrl("/authenticated", true)
+                        .failureUrl("/error")
                         .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
