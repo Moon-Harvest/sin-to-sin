@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders</title>
+    <link rel="stylesheet" href="styles.css"> <!-- You can include a custom CSS file here -->
+</head>
+
+<body>
+
+    <h1>Orders</h1>
+
+    <!-- Filter Section -->
+    <div>
+        <form action="/orders" method="get">
+            <label for="filter">Filter by:</label>
+            <select name="filter" id="filter">
+                <option value="day" th:selected="${filter == 'day'}">Day</option>
+                <option value="week" th:selected="${filter == 'week'}">Week</option>
+                <option value="month" th:selected="${filter == 'month'}">Month</option>
+                <option value="year" th:selected="${filter == 'year'}">Year</option>
+                <option value="all" th:selected="${filter == 'all'}">All</option>
+            </select>
+
+            <label for="date">Date:</label>
+            <input type="date" name="date" id="date" th:value="${date}">
+
+            <button type="submit">Filter</button>
+        </form>
+    </div>
+
+    <!-- Orders List -->
+    <div>
+        <h2>Orders for: <span th:text="${filter}"></span> <span th:text="${date}"></span></h2>
+
+        <!-- Display error message if no orders are found -->
+        <div th:if="${#lists.isEmpty(orders)}">
+            <p>No orders found for the selected filter and date.</p>
+        </div>
+
+        <!-- Table of orders -->
+        <table th:if="${!#lists.isEmpty(orders)}">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Order Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Loop through each order -->
+                <tr th:each="order : ${orders}">
+                    <td th:text="${order.id}"></td>
+                    <td th:text="${order.orderedAt}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>
