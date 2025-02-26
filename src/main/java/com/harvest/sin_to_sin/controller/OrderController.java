@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.harvest.sin_to_sin.model.ClientOrder;
+import com.harvest.sin_to_sin.model.CustomerOrder;
 import com.harvest.sin_to_sin.service.OrderService;
 
 import lombok.AllArgsConstructor;
@@ -33,7 +33,7 @@ public class OrderController {
     public String getOrders(@RequestParam(name = "filter", required = false, defaultValue = "none") String filter,
             @RequestParam(name = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
             Model model) {
-        List<ClientOrder> orders;
+        List<CustomerOrder> orders;
 
         switch (filter.toLowerCase()) {
             case "day":

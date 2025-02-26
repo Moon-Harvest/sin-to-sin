@@ -6,10 +6,10 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.harvest.sin_to_sin.model.ClientOrder;
+import com.harvest.sin_to_sin.model.CustomerOrder;
 
-public interface OrderRepository extends JpaRepository<ClientOrder, Long> {
-    Optional<List<ClientOrder>> findByOrderedAt(LocalDate date);
+public interface OrderRepository extends JpaRepository<CustomerOrder, Long> {
+    Optional<List<CustomerOrder>> findByOrderedAt(LocalDate date);
 
-    Optional<List<ClientOrder>> findByOrderedAtBetween(LocalDate startDate, LocalDate endDate);
+    Optional<List<CustomerOrder>> findByOrderedAtBetween(LocalDate startDate, LocalDate endDate);
 }

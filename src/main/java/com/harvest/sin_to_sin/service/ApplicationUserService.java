@@ -1,7 +1,6 @@
 package com.harvest.sin_to_sin.service;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.harvest.sin_to_sin.model.ApplicationUser;
 import com.harvest.sin_to_sin.model.ApplicationUserDTO;
 import com.harvest.sin_to_sin.model.ApplicationUserDetails;
+import com.harvest.sin_to_sin.model.Role;
 import com.harvest.sin_to_sin.repository.ApplicationUserRepository;
 
 import lombok.AllArgsConstructor;
@@ -26,43 +26,49 @@ public class ApplicationUserService implements UserDetailsService {
         private final ApplicationUserRepository applicationUserRepository;
         private final PasswordEncoder passwordEncoder;
 
+        // TODO should we do customerExistsByEmail instead
         @Transactional
-        public ApplicationUser registerUser(String email, String username, String rawPassword) {
+        public ApplicationUser registerCustomer(String email, String username, String rawPassword) {
                 if (applicationUserRepository.existsByEmail(email)) {
                         throw new ResponseStatusException(HttpStatus.CONFLICT,
-                                        "User already exists with email: " + email);
+                                        "Customer already exists with email: " + email);
                 }
 
                 ApplicationUser user = ApplicationUser.builder()
                                 .email(email)
                                 .username(username)
                                 .hashedPassword(passwordEncoder.encode(rawPassword))
-                                .role("USER")
+                                .role(Role.CUSTOMER)
                                 .build();
 
                 return applicationUserRepository
                                 .save(user);
         }
 
-        public List<ApplicationUserDTO> getAllUsers() {
-                return applicationUserRepository.findAll().stream()
-                                .map(user -> new ApplicationUserDTO(user.getEmail(), user.getUsername()))
-                                .collect(Collectors.toList());
-        }
+        // public List<ApplicationUserDTO> getAllUsers() {
+        // return applicationUserRepository.findAll().stream()
+        // .map(user -> new ApplicationUserDTO(user.getEmail(), user.getUsername()))
+        // .collect(Collectors.toList());
+        // }
 
-        @Transactional(readOnly = true)
-        public ApplicationUserDTO getUserByEmail(String email) {
-                return applicationUserRepository.findByEmail(email)
-                                .map(user -> new ApplicationUserDTO(user.getEmail(), user.getUsername()))
-                                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                                                String.format("No user found with email %s", email)));
-        }
+        // @Transactional(readOnly = true)
+        // public ApplicationUserDTO getUserByEmail(String email) {
+        // return applicationUserRepository.findByEmail(email)
+        // .map(user -> new ApplicationUserDTO(user.getEmail(), user.getUsername()))
+        // .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+        // String.format("No user found with email %s", email)));
+        // }
 
         @Override
         public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
                 return applicationUserRepository.findByEmail(email).map(ApplicationUserDetails::new)
                                 .orElseThrow(() -> new UsernameNotFoundException(
                                                 "User not found with email: " + email));
+        }
+
+        public Optional<ApplicationUserDTO> getCustomerDTOById(Long id) {
+                return applicationUserRepository.findByIdAndRole(id, Role.CUSTOMER)
+                                .map(user -> new ApplicationUserDTO(user.getId(), user.getUsername(), user.getEmail()));
         }
 
 }

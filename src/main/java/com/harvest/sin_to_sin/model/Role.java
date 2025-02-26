@@ -1,6 +1,16 @@
 package com.harvest.sin_to_sin.model;
 
-// TODO implement the Role enum
 public enum Role {
-    ADMIN_ROLE, CLIENT_ROLE;
+    ADMIN("ADMIN"),
+    CUSTOMER("CUSTOMER");
+
+    private final String roleName;
+
+    Role(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
 }

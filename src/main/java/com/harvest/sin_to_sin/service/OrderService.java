@@ -8,7 +8,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.harvest.sin_to_sin.model.ClientOrder;
+import com.harvest.sin_to_sin.model.CustomerOrder;
 import com.harvest.sin_to_sin.repository.OrderRepository;
 
 import lombok.AllArgsConstructor;
@@ -19,15 +19,15 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
-    public Optional<ClientOrder> getOrderById(Long id) {
+    public Optional<CustomerOrder> getOrderById(Long id) {
         return orderRepository.findById(id);
     }
 
-    public Optional<List<ClientOrder>> getOrdersByDay(LocalDate date) {
+    public Optional<List<CustomerOrder>> getOrdersByDay(LocalDate date) {
         return orderRepository.findByOrderedAt(date);
     }
 
-    public Optional<List<ClientOrder>> getOrdersByWeek(LocalDate date) {
+    public Optional<List<CustomerOrder>> getOrdersByWeek(LocalDate date) {
         // Get the first day of the week (e.g., Monday)
         LocalDate startOfWeek = date.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
         LocalDate endOfWeek = startOfWeek.plusDays(6); // End of the week (Sunday)
@@ -36,7 +36,7 @@ public class OrderService {
         return orderRepository.findByOrderedAtBetween(startOfWeek, endOfWeek);
     }
 
-    public Optional<List<ClientOrder>> getOrdersByMonth(LocalDate date) {
+    public Optional<List<CustomerOrder>> getOrdersByMonth(LocalDate date) {
         // Get the first day of the month
         LocalDate startOfMonth = date.with(TemporalAdjusters.firstDayOfMonth());
         LocalDate endOfMonth = startOfMonth.plusMonths(1).minusDays(1); // Last day of the month
@@ -45,7 +45,7 @@ public class OrderService {
         return orderRepository.findByOrderedAtBetween(startOfMonth, endOfMonth);
     }
 
-    public Optional<List<ClientOrder>> getOrdersByYear(LocalDate date) {
+    public Optional<List<CustomerOrder>> getOrdersByYear(LocalDate date) {
         // Get the first day of the year
         LocalDate startOfYear = date.with(TemporalAdjusters.firstDayOfYear());
         LocalDate endOfYear = startOfYear.plusYears(1).minusDays(1); // Last day of the year

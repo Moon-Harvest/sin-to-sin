@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class ClientOrder {
+public class CustomerOrder {
 
     @Id
     private Long id;

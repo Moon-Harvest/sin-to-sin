@@ -28,7 +28,7 @@ public class RegistrationController {
             @ModelAttribute("registrationForm") RegistrationForm form,
             Model model) {
         try {
-            userService.registerUser(form.getUsername(), form.getEmail(), form.getRawPassword());
+            userService.registerCustomer(form.getUsername(), form.getEmail(), form.getRawPassword());
             model.addAttribute("successMessage", "Registration successful! You can now log in.");
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Registration failed: " + e.getMessage());

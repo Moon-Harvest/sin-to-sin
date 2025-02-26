@@ -14,7 +14,7 @@
 
     <!-- Filter Section -->
     <div>
-        <form action="/orders" method="get">
+        <form action="/admin/orders" method="get">
             <label for="filter">Filter by:</label>
             <select name="filter" id="filter">
                 <option value="day" th:selected="${filter == 'day'}">Day</option>
@@ -22,14 +22,17 @@
                 <option value="month" th:selected="${filter == 'month'}">Month</option>
                 <option value="year" th:selected="${filter == 'year'}">Year</option>
                 <option value="all" th:selected="${filter == 'all'}">All</option>
+                <option value="none" th:selected="${filter == 'none'}">None</option> <!-- Handle 'none' filter -->
             </select>
-
+    
             <label for="date">Date:</label>
-            <input type="date" name="date" id="date" th:value="${date}">
-
+            <!-- Add default value check for the 'date' field -->
+            <input type="date" name="date" id="date" th:value="${date != null ? date : ''}"> <!-- Null check for date -->
+    
             <button type="submit">Filter</button>
         </form>
     </div>
+    
 
     <!-- Orders List -->
     <div>
