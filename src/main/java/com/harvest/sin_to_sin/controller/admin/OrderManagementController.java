@@ -1,4 +1,4 @@
-package com.harvest.sin_to_sin.controller;
+package com.harvest.sin_to_sin.controller.admin;
 
 import java.time.LocalDate;
 import java.util.Collections;
@@ -20,11 +20,11 @@ import lombok.AllArgsConstructor;
 @Controller
 @AllArgsConstructor
 @RequestMapping("/admin")
-public class OrderController {
+public class OrderManagementController {
 
     private final OrderService orderService;
 
-    @GetMapping("/admin/orders/{order_id}")
+    @GetMapping("/orders/{order_id}")
     public String getOrder(@PathVariable("order_id") Model model) {
         return "unimplemented";
     }

@@ -28,7 +28,7 @@ public class RegistrationController {
             @ModelAttribute("registrationForm") RegistrationForm form,
             Model model) {
         try {
-            userService.registerCustomer(form.getUsername(), form.getEmail(), form.getRawPassword());
+            userService.registerCustomer(form.getEmail(), form.getUsername(), form.getRawPassword());
             model.addAttribute("successMessage", "Registration successful! You can now log in.");
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Registration failed: " + e.getMessage());
@@ -36,10 +36,4 @@ public class RegistrationController {
         return "register";
     }
 
-    @GetMapping("/")
-    public String home(Model model) {
-        model.addAttribute("username", "John Doe");
-        model.addAttribute("isLoggedIn", true);
-        return "home";
-    }
 }
