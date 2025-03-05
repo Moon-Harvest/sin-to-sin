@@ -10,6 +10,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.harvest.sin_to_sin.security.CustomAuthenticationSuccessHandler;
+
 import lombok.AllArgsConstructor;
 
 @Configuration
@@ -17,43 +19,45 @@ import lombok.AllArgsConstructor;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+        private final CustomAuthenticationSuccessHandler successHandler;
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
-            throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();
-    }
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
+        }
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/customer/**").hasRole("CUSTOMER")
-                        .requestMatchers("/login", "/register").permitAll()
-                        .anyRequest().authenticated())
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/authenticated", true)
-                        .failureUrl("/error")
-                        .permitAll())
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login?logout=true")
-                        .invalidateHttpSession(true)
-                        .clearAuthentication(true)
-                        .permitAll())
-                .sessionManagement(session -> session
-                        .sessionConcurrency(concurrency -> concurrency
-                                .maximumSessions(1)
-                                .maxSessionsPreventsLogin(false)));
+        @Bean
+        public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
+                        throws Exception {
+                return authenticationConfiguration.getAuthenticationManager();
+        }
 
-        return http.build();
-    }
+        @Bean
+        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+                http
+                                .csrf(csrf -> csrf.disable())
+                                .authorizeHttpRequests(auth -> auth
+                                                .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                                                .requestMatchers("/customer/**").hasAuthority("CUSTOMER")
+                                                .requestMatchers("/login", "/register").permitAll()
+                                                .anyRequest().authenticated())
+                                .formLogin(form -> form
+                                                .loginPage("/login")
+                                                .successHandler(successHandler)
+                                                .failureUrl("/error")
+                                                .permitAll())
+                                .logout(logout -> logout
+                                                .logoutUrl("/logout")
+                                                .logoutSuccessUrl("/login?logout=true")
+                                                .invalidateHttpSession(true)
+                                                .clearAuthentication(true)
+                                                .permitAll())
+                                .sessionManagement(session -> session
+                                                .sessionConcurrency(concurrency -> concurrency
+                                                                .maximumSessions(1)
+                                                                .maxSessionsPreventsLogin(false)));
+
+                return http.build();
+        }
 
 }
