@@ -1,4 +1,4 @@
-package com.harvest.sin_to_sin.controller;
+package com.harvest.sin_to_sin.controller.common;
 
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

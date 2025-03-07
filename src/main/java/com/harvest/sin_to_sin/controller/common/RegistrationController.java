@@ -1,4 +1,4 @@
-package com.harvest.sin_to_sin.controller;
+package com.harvest.sin_to_sin.controller.common;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

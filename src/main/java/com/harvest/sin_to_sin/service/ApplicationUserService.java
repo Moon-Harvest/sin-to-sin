@@ -14,7 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.harvest.sin_to_sin.model.ApplicationUser;
 import com.harvest.sin_to_sin.model.ApplicationUserDTO;
 import com.harvest.sin_to_sin.model.ApplicationUserDetails;
-import com.harvest.sin_to_sin.model.Role;
+import com.harvest.sin_to_sin.model.enums.Role;
 import com.harvest.sin_to_sin.repository.ApplicationUserRepository;
 
 import lombok.AllArgsConstructor;
